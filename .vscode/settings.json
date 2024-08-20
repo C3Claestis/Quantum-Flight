@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Project Quantum Flight.sln"
+    "dotnet.defaultSolution": "Quantum-Flight.sln"
 }
