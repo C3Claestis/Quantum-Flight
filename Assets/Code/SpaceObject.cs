@@ -6,6 +6,7 @@ public class SpaceObject : MonoBehaviour
 {
     [SerializeField] bool meteorit;
     [SerializeField] int Damage;
+    [SerializeField] GameObject explode;
     public float rotationSpeed = 100f;  // Kecepatan rotasi dalam derajat per detik
     public float Speed = 5;
     Rigidbody2D rb;
@@ -27,6 +28,7 @@ public class SpaceObject : MonoBehaviour
             Debug.Log("TERKENA METEOR");
             PlayerStatus playerStatus = other.GetComponent<PlayerStatus>();
             playerStatus.SetHP(-Damage);
+            Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         if (other.CompareTag("Player") && !meteorit )

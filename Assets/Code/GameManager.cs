@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,7 +9,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Lever2D controlLever;
     [SerializeField] RandomSpawnMeteorit randomSpawnMeteorit;
     [SerializeField] TextMeshProUGUI ScoreText;
-    public bool isFuelFull;
+    [SerializeField] GameObject panel_Resume;
+    [HideInInspector] public bool isFuelFull;
     float speed = 0.03f;
     int UpDown, RigthLeft;
     int score;
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour
             {
                 SetPlayerConditions(true, 2, 0.05f, 1, 7, 200, 3);
             }
-            else if (controlMove.anchoredPosition.y == -100)
+            else if (controlMove.anchoredPosition.y == -110)
             {
                 SetPlayerConditions(false, 0, 0.01f, 3, 3, 75, 1);
             }
@@ -74,7 +76,7 @@ public class GameManager : MonoBehaviour
         speed = playerSpeed;
         randomSpawnMeteorit.spawnInterval = spawnInterval;
         scoreMultiplier = scores;  // Set multiplier berdasarkan kondisi
-       
+
         SpaceObject[] spaceObjects = FindObjectsOfType<SpaceObject>();
         foreach (SpaceObject spaceObject in spaceObjects)
         {
@@ -124,5 +126,21 @@ public class GameManager : MonoBehaviour
                 player.transform.position = new Vector2(player.transform.position.x + speed, player.transform.position.y);
                 break;
         }
+    }
+
+    public void Resume()
+    {
+        panel_Resume.SetActive(true);
+        Time.timeScale = 0;
+    }
+    public void BackGame()
+    {
+        panel_Resume.SetActive(false);
+        Time.timeScale = 1;
+    }
+    public void MainMenu()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 }

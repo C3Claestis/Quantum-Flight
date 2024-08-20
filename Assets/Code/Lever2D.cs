@@ -6,10 +6,11 @@ using UnityEngine.Events;
 public class Lever2D : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDragHandler
 {
     [SerializeField] bool vertical;
-    public RectTransform leverBackground;  // Background lever
+    [SerializeField] RectTransform leverBackground;  // Background lever
+    [SerializeField] Animator animator;
     private RectTransform leverHandle;     // Handle lever
-    public float moveRange = 100f;         // Range pergerakan handle
-    public float snapThreshold = 25f;      // Threshold untuk snapping posisi
+    private float moveRange = 110f;         // Range pergerakan handle
+    private float snapThreshold = 25f;      // Threshold untuk snapping posisi
 
     // Events ketika tuas mencapai posisi tertentu
     public UnityEvent OnUpperPositionReached;
@@ -37,6 +38,8 @@ public class Lever2D : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDra
             centerPosition = new Vector2(0, 0);
             bottomPosition = new Vector2(-moveRange, 0);
         }
+
+        animator.SetFloat("Anim", 0.5f);
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -86,14 +89,17 @@ public class Lever2D : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDra
         if (position <= (vertical ? bottomPosition.y : bottomPosition.x) + snapThreshold)
         {
             OnBottomPositionReached?.Invoke(); // Panggil event saat mencapai posisi bawah
+            animator.SetFloat("Anim", 0f);    // Set blend ke 0 saat posisi di bawah
         }
         else if (position >= (vertical ? upperPosition.y : upperPosition.x) - snapThreshold)
         {
             OnUpperPositionReached?.Invoke(); // Panggil event saat mencapai posisi atas
+            animator.SetFloat("Anim", 1f);    // Set blend ke 1 saat posisi di atas
         }
         else if (Mathf.Abs(position) < snapThreshold)
         {
             OnCenterPositionReached?.Invoke(); // Panggil event saat berada di tengah
+            animator.SetFloat("Anim", 0.5f);  // Set blend ke 0.5 saat posisi di tengah
         }
     }
 
@@ -111,21 +117,26 @@ public class Lever2D : MonoBehaviour, IDragHandler, IPointerDownHandler, IEndDra
         {
             leverHandle.anchoredPosition = vertical ? new Vector2(0, upperPosition.y) : new Vector2(upperPosition.x, 0);
             OnUpperPositionReached?.Invoke();
+            animator.SetFloat("Anim", 1f);    // Set blend ke 1 saat posisi di atas
         }
         else if (distanceToCenter < distanceToUpper && distanceToCenter < distanceToBottom)
         {
             leverHandle.anchoredPosition = vertical ? new Vector2(0, centerPosition.y) : new Vector2(centerPosition.x, 0);
             OnCenterPositionReached?.Invoke();
+            animator.SetFloat("Anim", 0.5f);  // Set blend ke 0.5 saat posisi di tengah
         }
         else
         {
             leverHandle.anchoredPosition = vertical ? new Vector2(0, bottomPosition.y) : new Vector2(bottomPosition.x, 0);
             OnBottomPositionReached?.Invoke();
+            animator.SetFloat("Anim", 0f);    // Set blend ke 0 saat posisi di bawah
         }
     }
+
     public void MoveToBottomPosition()
     {
         leverHandle.anchoredPosition = vertical ? bottomPosition : new Vector2(bottomPosition.x, 0);
         OnBottomPositionReached?.Invoke();  // Panggil event saat mencapai posisi bawah
+        animator.SetFloat("Anim", 0f);    // Set blend ke 0 saat posisi di bawah
     }
 }

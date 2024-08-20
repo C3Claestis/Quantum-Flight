@@ -301,5 +301,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meteorit: 1
   Damage: 10
+  explode: {fileID: 417761080263594737, guid: 7800b8f6b712bfe49bd663eeb3ebe1e4, type: 3}
   rotationSpeed: 100
   Speed: 5
