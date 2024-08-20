@@ -53,11 +53,6 @@ public class PlayerStatus : MonoBehaviour
         {
             gameManager.isFuelFull = true;
         }
-
-        if (Input.GetKey(KeyCode.L))
-        {
-            Fuel += 1000;
-        }
     }
     void ManagerHP()
     {
