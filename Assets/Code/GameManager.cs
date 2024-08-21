@@ -25,9 +25,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        MovePlayerUpDown(UpDown);
-        MovePlayerRightLeft(RigthLeft);
-
         ClampPlayerPosition();
 
         ManageFuelAndSpeed();
@@ -35,6 +32,12 @@ public class GameManager : MonoBehaviour
         UpdateScore();
 
         ScoreText.text = score.ToString();
+    }
+
+    void FixedUpdate()
+    {
+        MovePlayerUpDown(UpDown);
+        MovePlayerRightLeft(RigthLeft);
     }
 
     void ClampPlayerPosition()
@@ -51,20 +54,20 @@ public class GameManager : MonoBehaviour
         {
             if (controlMove.anchoredPosition.y > 0)
             {
-                SetPlayerConditions(true, 2, 0.05f, 1, 7, 200, 3);
+                SetPlayerConditions(true, 2, 5f, 1, 7, 200, 3);
             }
             else if (controlMove.anchoredPosition.y == -110)
             {
-                SetPlayerConditions(false, 0, 0.01f, 3, 3, 75, 1);
+                SetPlayerConditions(false, 0, 1f, 3, 3, 75, 1);
             }
             else if (controlMove.anchoredPosition.y <= 0)
             {
-                SetPlayerConditions(true, 1, 0.03f, 2, 5, 100, 2);
+                SetPlayerConditions(true, 1, 3f, 2, 5, 100, 2);
             }
         }
         else
         {
-            SetPlayerConditions(false, 0, 0.01f, 3, 3, 75, 1);
+            SetPlayerConditions(false, 0, 1f, 3, 3, 75, 1);
             controlLever.MoveToBottomPosition();
         }
     }
@@ -96,7 +99,7 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 UpDown = 0;
-                player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y - speed);
+                player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y - speed * Time.deltaTime);
                 break;
             case 1:
                 UpDown = 1;
@@ -104,7 +107,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 2:
                 UpDown = 2;
-                player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + speed);
+                player.transform.position = new Vector2(player.transform.position.x, player.transform.position.y + speed * Time.deltaTime);
                 break;
         }
     }
@@ -115,7 +118,7 @@ public class GameManager : MonoBehaviour
         {
             case 0:
                 RigthLeft = 0;
-                player.transform.position = new Vector2(player.transform.position.x - speed, player.transform.position.y);
+                player.transform.position = new Vector2(player.transform.position.x - speed * Time.deltaTime, player.transform.position.y);
                 break;
             case 1:
                 RigthLeft = 1;
@@ -123,7 +126,7 @@ public class GameManager : MonoBehaviour
                 break;
             case 2:
                 RigthLeft = 2;
-                player.transform.position = new Vector2(player.transform.position.x + speed, player.transform.position.y);
+                player.transform.position = new Vector2(player.transform.position.x + speed * Time.deltaTime, player.transform.position.y);
                 break;
         }
     }
@@ -142,5 +145,10 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(0);
+    }
+    public void Restart()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

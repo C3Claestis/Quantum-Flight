@@ -8,15 +8,15 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] GameManager gameManager;
     [SerializeField] Image barHp;
     [SerializeField] Image barFuel;
-
+    [SerializeField] GameObject panel_finish;
     private int HealthPoint;
     private int MaxHealthPoint = 100;
 
     private float Fuel;
     private int MaxFuel = 1000;
 
-    public bool FuelConds = false;
-    public int FuelCost;
+    [HideInInspector] public bool FuelConds = false;
+    [HideInInspector] public int FuelCost;
     public void SetHP(int hp)
     {
         // Mengurangi atau menambah HealthPoint berdasarkan nilai hpChange
@@ -60,6 +60,12 @@ public class PlayerStatus : MonoBehaviour
         barHp.fillAmount = (float)HealthPoint / MaxHealthPoint;
         // Ensure HealthPoint does not go below 0
         HealthPoint = Mathf.Max(HealthPoint, 0);
+
+        if (HealthPoint <= 0)
+        {
+            panel_finish.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
     void ManagerFuel(bool isFuel)
     {
