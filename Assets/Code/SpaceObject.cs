@@ -5,6 +5,8 @@ using UnityEngine;
 public class SpaceObject : MonoBehaviour
 {
     [SerializeField] bool meteorit;
+    [SerializeField] bool fuel;
+    [SerializeField] bool HP;
     [SerializeField] int Damage;
     [SerializeField] GameObject explode;
     public float rotationSpeed = 100f;  // Kecepatan rotasi dalam derajat per detik
@@ -31,11 +33,18 @@ public class SpaceObject : MonoBehaviour
             Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
-        if (other.CompareTag("Player") && !meteorit )
+        if (other.CompareTag("Player") && fuel)
         {
             Debug.Log("TERKENA FUEL");
             PlayerStatus playerStatus = other.GetComponent<PlayerStatus>();
             playerStatus.SetFuel(100);
+            Destroy(gameObject);
+        }
+        if (other.CompareTag("Player") && HP)
+        {
+            Debug.Log("TERKENA FUEL");
+            PlayerStatus playerStatus = other.GetComponent<PlayerStatus>();
+            playerStatus.SetHP(10);
             Destroy(gameObject);
         }
         if (other.CompareTag("Barier") && meteorit)

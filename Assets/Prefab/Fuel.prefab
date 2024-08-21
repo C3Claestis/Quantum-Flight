@@ -261,6 +261,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meteorit: 0
+  fuel: 1
+  HP: 0
   Damage: 0
+  explode: {fileID: 0}
   rotationSpeed: 100
   Speed: 5

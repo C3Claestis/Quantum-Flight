@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     int score;
     int scoreMultiplier;
 
+    public int GetScore() => score;
     void Start()
     {
         UpDown = 1;
@@ -54,20 +55,20 @@ public class GameManager : MonoBehaviour
         {
             if (controlMove.anchoredPosition.y > 0)
             {
-                SetPlayerConditions(true, 2, 5f, 1, 7, 200, 3);
+                SetPlayerConditions(true, 2, 5f, 1, 7, 200, 4);
             }
             else if (controlMove.anchoredPosition.y == -110)
             {
-                SetPlayerConditions(false, 0, 1f, 3, 3, 75, 1);
+                SetPlayerConditions(false, 0, 1f, 3, 3, 75, 2);
             }
             else if (controlMove.anchoredPosition.y <= 0)
             {
-                SetPlayerConditions(true, 1, 3f, 2, 5, 100, 2);
+                SetPlayerConditions(true, 1, 3f, 2, 5, 100, 3);
             }
         }
         else
         {
-            SetPlayerConditions(false, 0, 1f, 3, 3, 75, 1);
+            SetPlayerConditions(false, 0, 1f, 3, 3, 75, 2);
             controlLever.MoveToBottomPosition();
         }
     }

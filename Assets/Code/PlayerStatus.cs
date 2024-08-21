@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class PlayerStatus : MonoBehaviour
     [SerializeField] Image barHp;
     [SerializeField] Image barFuel;
     [SerializeField] GameObject panel_finish;
+    [SerializeField] TextMeshProUGUI score;
     private int HealthPoint;
     private int MaxHealthPoint = 100;
 
@@ -64,6 +66,13 @@ public class PlayerStatus : MonoBehaviour
         if (HealthPoint <= 0)
         {
             panel_finish.SetActive(true);
+
+            if (gameManager.GetScore() > PlayerPrefs.GetInt("Score"))
+            {
+                PlayerPrefs.SetInt("Score", gameManager.GetScore());
+            }
+            
+            score.text = gameManager.GetScore().ToString();
             Time.timeScale = 0;
         }
     }
@@ -78,11 +87,11 @@ public class PlayerStatus : MonoBehaviour
             switch (FuelCost)
             {
                 case 1:
-                    Fuel -= 0.1f;
+                    Fuel -= 0.2f;
                     this.Fuel = Mathf.Clamp(this.Fuel, 0, MaxFuel);
                     break;
                 case 2:
-                    Fuel -= 0.2f;
+                    Fuel -= 0.5f;
                     this.Fuel = Mathf.Clamp(this.Fuel, 0, MaxFuel);
                     break;
             }

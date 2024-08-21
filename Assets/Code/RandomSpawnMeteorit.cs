@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RandomSpawnMeteorit : MonoBehaviour
 {
-    [SerializeField] GameObject[] meteorPrefabs = new GameObject[7];
+    [SerializeField] GameObject[] meteorPrefabs = new GameObject[9];
     public float spawnInterval = 2f;  // Interval waktu antar spawn meteorit
     public float spawnHeight = 5f;  // Tinggi maksimum dan minimum spawn meteorit
 
