@@ -38,6 +38,7 @@ public class SpaceObject : MonoBehaviour
             Debug.Log("TERKENA FUEL");
             PlayerStatus playerStatus = other.GetComponent<PlayerStatus>();
             playerStatus.SetFuel(100);
+            Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         if (other.CompareTag("Player") && HP)
@@ -45,6 +46,7 @@ public class SpaceObject : MonoBehaviour
             Debug.Log("TERKENA FUEL");
             PlayerStatus playerStatus = other.GetComponent<PlayerStatus>();
             playerStatus.SetHP(10);
+            Instantiate(explode, transform.position, Quaternion.identity);
             Destroy(gameObject);
         }
         if (other.CompareTag("Barier") && meteorit)

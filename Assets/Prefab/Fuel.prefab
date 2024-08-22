@@ -264,6 +264,6 @@ MonoBehaviour:
   fuel: 1
   HP: 0
   Damage: 0
-  explode: {fileID: 0}
+  explode: {fileID: 971753797554919925, guid: 2b66cc80282053b43a36971a9741e1cf, type: 3}
   rotationSpeed: 100
   Speed: 5
